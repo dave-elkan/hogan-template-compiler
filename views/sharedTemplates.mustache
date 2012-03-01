@@ -1,0 +1,22 @@
+define(['hogan'], function(Hogan) {
+    var partials = {
+    {{#templates}}
+        "{{id}}": {{{script}}}{{^last}},{{/last}}
+    {{/templates}}
+    };
+
+    for (var id in partials) {
+        partials[id] = new Hogan.Template(partials[id]);
+    }
+
+    var templates = {};
+    for (var id in partials) {
+        templates[id] = (function(id) {
+            return function(context) {
+                return partials[id].render(context, partials);
+            }
+        })(id);
+    }
+
+    return templates;
+});
