@@ -2,15 +2,14 @@ var fs = require('fs'),
     _ = require("underscore"),
     hogan = require('hogan.js'),
     defaults = {
-        partialsDirectoryName: "partials",
-        sharedTemplateTemplate: __dirname + "/views/sharedTemplates.mustache"
+        templateDirectory: __dirname + "/views",
+        sharedTemplatesTemplate: __dirname + "/views/sharedTemplates.mustache"
     };
 
-module.exports = function(app, options) {
+module.exports = function(options) {
     options = options || {};
     _.defaults(options, defaults); 
 
-    var sharedTemplateTemplate = readSharedTemplatesTemplate();
     
     // Remove utf-8 byte order mark, http://en.wikipedia.org/wiki/Byte_order_mark
     function removeByteOrderMark(text) {
@@ -18,10 +17,6 @@ module.exports = function(app, options) {
            return text.substring(1);
        }
        return text;
-    }
-
-    function readSharedTemplatesTemplate() {
-        return hogan.compile(readTemplateFile(options.sharedTemplateTemplate));
     }
 
     function readTemplateFile(file) {
@@ -43,16 +38,15 @@ module.exports = function(app, options) {
      * directory to stringified javascript functions.
      */
     function readTemplates(templateDirectory) {
-        var sharedTemplateDirectory = templateDirectory + "/" + options.partialsDirectoryName;
-        var sharedTemplates = [];
-        forEachFileInDirectory(sharedTemplateDirectory, function(fileName, fileContents) {
-            sharedTemplates.push({
+        var partials = [];
+        forEachFileInDirectory(templateDirectory, function(fileName, fileContents) {
+            partials.push({
                 id: fileName,
                 contents: fileContents
             });
         });
 
-        return sharedTemplates;
+        return partials;
     }
 
     function compileStringifiedTemplates(templates) {
@@ -60,7 +54,7 @@ module.exports = function(app, options) {
         templates.forEach(function(template, i) {
             compiledTemplates.push({
                 id: template.id,
-                script: hogan.compile(template.contents, {
+                script: compile(template.contents, {
                     asString: true
                 }),
                 last: i === templates.length - 1
@@ -79,10 +73,18 @@ module.exports = function(app, options) {
     function compilePartials(templates) {
         var partials = {};
         templates.forEach(function(template) {
-            partials[template.id] = hogan.compile(template.contents);
+            partials[template.id] = compile(template.contents);
         });
 
         return partials;
+    }
+
+    function compile(templateContents, options) {
+       return hogan.compile(templateContents, options);
+    }
+
+    function compileTemplateFile(file) {
+        return compile(readTemplateFile(file));
     }
 
     function getShortFileName(fileName) {
@@ -90,46 +92,34 @@ module.exports = function(app, options) {
         return fileName.substr(lastSlashIndex, fileName.lastIndexOf(".") - lastSlashIndex);
     }
 
-    var templates,
+    var sharedTemplateTemplate,
         stringifiedTemplates,
         partials;
 
-    function compileTemplates() {
-        templates = readTemplates(app.settings.views);
+    function read() {
+        sharedTemplateTemplate = compileTemplateFile(options.sharedTemplatesTemplate);
+
+        var templates = readTemplates(options.templateDirectory);
         partials = compilePartials(templates);
         stringifiedTemplates = renderStringifiedTemplates(compileStringifiedTemplates(templates));
     }
 
-    function readTemplatesMiddleware(req, res, next) {
-        sharedTemplateTemplate = readSharedTemplatesTemplate();
-        compileTemplates();
-        next();
-    }
+    read();
 
-    compileTemplates();
-
-    if (app.settings.env === "development") {
-        app.use(readTemplatesMiddleware);
-    }
-    
     return {
-        compiler: {
-            compile: function(source, options) {
-                var fileName = getShortFileName(options.filename),
-                    template = partials[fileName];
-                
-                if (!template) {
-                    partials[fileName] = template = hogan.compile(source);
-                }
-
-                return function(locals) {
-                    return template.render(locals, partials);
-                };
-            }
+        read: read,
+        compileTemplateFile: compileTemplateFile,
+        getPartials: function() {
+            return partials;
         },
-
         getSharedTemplates: function() {
             return stringifiedTemplates;
+        },
+        getTemplate: function(file) {
+            var fileName = getShortFileName(file),
+                template = partials[fileName];
+
+            return template;
         }
-    }
+    };
 };
