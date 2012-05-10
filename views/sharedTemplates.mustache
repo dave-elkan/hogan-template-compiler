@@ -1,4 +1,4 @@
-define(['hogan'], function(Hogan) {
+var templates = (function($) {
     var partials = {
     {{#templates}}
         "{{id}}": {{{script}}}{{^last}},{{/last}}
@@ -13,10 +13,10 @@ define(['hogan'], function(Hogan) {
     for (var id in partials) {
         templates[id] = (function(id) {
             return function(context) {
-                return partials[id].render(context, partials);
+                return $(partials[id].render(context, partials));
             }
         })(id);
     }
 
     return templates;
-});
+})(jQuery);

@@ -9,7 +9,6 @@ var fs = require('fs'),
 module.exports = function(options) {
     options = options || {};
     _.defaults(options, defaults); 
-
     
     // Remove utf-8 byte order mark, http://en.wikipedia.org/wiki/Byte_order_mark
     function removeByteOrderMark(text) {
