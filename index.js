@@ -12,7 +12,7 @@ module.exports = function(options) {
     
     // Remove utf-8 byte order mark, http://en.wikipedia.org/wiki/Byte_order_mark
     function removeByteOrderMark(text) {
-       if (text.charCodeAt(0) === 0xfeff) {
+       if (text && text.charCodeAt(0) === 0xfeff) {
            return text.substring(1);
        }
        return text;
@@ -22,23 +22,18 @@ module.exports = function(options) {
         return removeByteOrderMark(fs.readFileSync(file, "utf8"));
     }
 
-    function forEachFileInDirectory(directory, callback) {
-        var fileList = fs.readdirSync(directory);
-        fileList.forEach(function(file, i) {
-            var fileName = getShortFileName(file),
-                fileContents = readTemplateFile(directory + "/" + file);
-
-            callback(fileName, fileContents);
-        });
-    }
-    
     /**
      * Reads and compiles hogan templates from the shared template 
      * directory to stringified javascript functions.
      */
     function readTemplates(templateDirectory) {
-        var partials = [];
-        forEachFileInDirectory(templateDirectory, function(fileName, fileContents) {
+        var partials = [],
+            fileList = fs.readdirSync(templateDirectory);
+
+        fileList.forEach(function(file, i) {
+            var fileName = getShortFileName(file),
+                fileContents = readTemplateFile(directory + "/" + file);
+
             partials.push({
                 id: fileName,
                 contents: fileContents
