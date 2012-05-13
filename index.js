@@ -18,6 +18,11 @@ module.exports = function(options) {
        return text;
     }
 
+    /**
+     * Reads a template file from the files system.
+     * @param {String} file The path of the file to read.
+     * @return {String} The contents of the file.
+     */
     function readTemplateFile(file) {
         return removeByteOrderMark(fs.readFileSync(file, "utf8"));
     }
@@ -43,12 +48,18 @@ module.exports = function(options) {
         return partials;
     }
 
+    /**
+     * Compiles templates as strings of javascript.
+     *
+     * @param {Array} templates The list of templates as produced by the function readTemplates
+     * @return {Array} An array of
+     */
     function compileStringifiedTemplates(templates) {
         var compiledTemplates = [];
         templates.forEach(function(template, i) {
             compiledTemplates.push({
                 id: template.id,
-                script: compile(template.contents, {
+                script: hogan.compile(template.contents, {
                     asString: true
                 }),
                 last: i === templates.length - 1
@@ -58,27 +69,37 @@ module.exports = function(options) {
         return compiledTemplates;
     }
 
+    /**
+     * Compiles the templates as strings and renders them into a javascript function via the
+     * shareTemplates.mustache template file.
+     *
+     * @param templates The templates to
+     * @return {*}
+     */
     function renderStringifiedTemplates(templates) {
-       return sharedTemplateTemplate.render({
-           templates: templates
-       });
+        var compiledTemplates = compileStringifiedTemplates(templates);
+        return sharedTemplateTemplate.render({
+            templates: compiledTemplates
+        });
     }
 
+    /**
+     * Compiles a map of partials.
+     *
+     * @param templates {Array} The templates to add to the partials map.
+     * @return {Object} A map of partials.
+     */
     function compilePartials(templates) {
         var partials = {};
         templates.forEach(function(template) {
-            partials[template.id] = compile(template.contents);
+            partials[template.id] = hogan.compile(template.contents);
         });
 
         return partials;
     }
 
-    function compile(templateContents, options) {
-       return hogan.compile(templateContents, options);
-    }
-
     function compileTemplateFile(file) {
-        return compile(readTemplateFile(file));
+        return hogan.compile(readTemplateFile(file));
     }
 
     function getShortFileName(fileName) {
@@ -90,12 +111,20 @@ module.exports = function(options) {
         stringifiedTemplates,
         partials;
 
+    /**
+     * Initialise the template renderer.
+     *
+     * Compiles the Shared Template template file.
+     * Reads the templates from the template directory.
+     * Compiles a map of partials.
+     * Renders a script containing the stringified templates which can be used in the browser.
+     */
     function read() {
         sharedTemplateTemplate = compileTemplateFile(options.sharedTemplatesTemplate);
 
         var templates = readTemplates(options.templateDirectory);
         partials = compilePartials(templates);
-        stringifiedTemplates = renderStringifiedTemplates(compileStringifiedTemplates(templates));
+        stringifiedTemplates = renderStringifiedTemplates(templates);
     }
 
     read();
