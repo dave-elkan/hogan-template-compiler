@@ -32,20 +32,20 @@ module.exports = function(options) {
      * directory to stringified javascript functions.
      */
     function readTemplates(templateDirectory) {
-        var partials = [],
+        var templates = [],
             fileList = fs.readdirSync(templateDirectory);
 
         fileList.forEach(function(file, i) {
             var fileName = getShortFileName(file),
                 fileContents = readTemplateFile(templateDirectory + "/" + file);
 
-            partials.push({
+            templates.push({
                 id: fileName,
                 contents: fileContents
             });
         });
 
-        return partials;
+        return templates;
     }
 
     /**
