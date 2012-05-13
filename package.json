@@ -1,5 +1,5 @@
 {
-    "name": "hogan-template-renderer",
+    "name": "hogan-template-compiler",
     "author": "Dave Elkan <dave@edave.net> (http://www.edave.net)",
     "description": "A module which pre-compiles shared templates and partials for use in a connect-based webapp",
     "version": "1.0.1",
