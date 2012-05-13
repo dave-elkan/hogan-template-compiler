@@ -37,7 +37,7 @@ module.exports = function(options) {
 
         fileList.forEach(function(file, i) {
             var fileName = getShortFileName(file),
-                fileContents = readTemplateFile(directory + "/" + file);
+                fileContents = readTemplateFile(templateDirectory + "/" + file);
 
             partials.push({
                 id: fileName,
