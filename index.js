@@ -2,7 +2,7 @@ var fs = require('fs'),
     _ = require("underscore"),
     hogan = require('hogan.js'),
     defaults = {
-        templateDirectory: __dirname + "/views",
+        partialsDirectory: __dirname + "/views",
         sharedTemplatesTemplate: __dirname + "/views/sharedTemplates.mustache"
     };
 
@@ -123,7 +123,7 @@ module.exports = function(options) {
     function read() {
         sharedTemplateTemplate = compileTemplateFile(options.sharedTemplatesTemplate);
 
-        var templates = readTemplates(options.templateDirectory);
+        var templates = readTemplates(options.partialsDirectory);
         partials = compilePartials(templates);
         stringifiedTemplates = renderStringifiedTemplates(templates);
     }

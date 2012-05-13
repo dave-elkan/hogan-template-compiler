@@ -2,7 +2,7 @@
     "name": "hogan-template-compiler",
     "author": "Dave Elkan <dave@edave.net> (http://www.edave.net)",
     "description": "A module which pre-compiles shared templates and partials for use in a connect-based webapp",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "repository": "git://github.com/dave-elkan/hogan-template-compiler",
     "main": "index",
     "engines": {
