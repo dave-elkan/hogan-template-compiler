@@ -28,8 +28,9 @@ module.exports = function(options) {
     }
 
     /**
-     * Reads and compiles hogan templates from the shared template 
-     * directory to stringified javascript functions.
+     * Reads hogan templates from the template directory.
+     *
+     * @param {String} templateDirectory The path to the template directory.
      */
     function readTemplates(templateDirectory) {
         var templates = [],
@@ -52,7 +53,7 @@ module.exports = function(options) {
      * Compiles templates as strings of javascript.
      *
      * @param {Array} templates The list of templates as produced by the function readTemplates
-     * @return {Array} An array of
+     * @return {Array} An array of compiled stringified templates.
      */
     function compileStringifiedTemplates(templates) {
         var compiledTemplates = [];
