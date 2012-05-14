@@ -1,9 +1,9 @@
 
 # Hogan Template Compiler
       
-  A simple library for connect-powered web apps to easily pre-compile templates using Hogan.js
+  A simple module for connect-powered web apps to easily pre-compile templates using Hogan.js
 
-  [Read more here](http://www.edave.net/2012/02/25/sharing-pre-compiled-templates-between-server-and-client-with-hogan-js)
+  [Read more here](http://www.edave.net/2012/05/13/hogan-template-compiler-module/)
 
 # Quick install
 	$ npm install hogan-template-compiler

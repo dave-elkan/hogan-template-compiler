@@ -1,0 +1,108 @@
+info it worked if it ends with ok
+verbose cli [ 'node', '/Users/dave/local/bin/npm', 'publish' ]
+info using npm@1.1.21
+info using node@v0.6.17
+verbose config file /Users/dave/.npmrc
+verbose config file /Users/dave/local/etc/npmrc
+verbose config file /Users/dave/local/lib/node_modules/npm/npmrc
+verbose publish [ '.' ]
+verbose caching /Users/dave/Code/node/hogan-template-compiler/package.json
+verbose loadDefaults hogan-template-compiler@1.0.3
+info prepublish hogan-template-compiler@1.0.3
+verbose cache add [ '.', null ]
+silly cache add: name, spec, args [ undefined, '.', [ '.', null ] ]
+verbose parsed url { pathname: '.', path: '.', href: '.' }
+verbose caching package.json
+verbose loadDefaults hogan-template-compiler@1.0.3
+verbose tar.pack [ '/Users/dave/.tmp-scripts/npm-1336884937298/1336884937298-0.6202367206569761/tmp.tgz',
+verbose tar.pack   '.' ]
+verbose tarball /Users/dave/.tmp-scripts/npm-1336884937298/1336884937298-0.6202367206569761/tmp.tgz
+verbose folder .
+verbose unpack /Users/dave/.tmp-scripts/npm-1336884937298/1336884937298-0.6202367206569761/tmp.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry .npmignore
+silly extracting entry index.js
+silly extracting entry Readme.md
+silly extracting entry views/sharedTemplates.mustache
+verbose caching /Users/dave/.tmp-scripts/npm-1336884937298/1336884937298-0.6202367206569761/package/package.json
+verbose loadDefaults hogan-template-compiler@1.0.3
+verbose from cache /Users/dave/.tmp-scripts/npm-1336884937298/1336884937298-0.6202367206569761/package/package.json
+verbose tar.pack [ '/Users/dave/.npm/hogan-template-compiler/1.0.3/package.tgz',
+verbose tar.pack   '/Users/dave/.tmp-scripts/npm-1336884937298/1336884937298-0.6202367206569761/package' ]
+verbose tarball /Users/dave/.npm/hogan-template-compiler/1.0.3/package.tgz
+verbose folder /Users/dave/.tmp-scripts/npm-1336884937298/1336884937298-0.6202367206569761/package
+verbose unpack /Users/dave/.npm/hogan-template-compiler/1.0.3/package.tgz
+silly gunzTarPerm modes [ '755', '644' ]
+silly extracting entry package.json
+silly extracting entry .npmignore
+silly extracting entry index.js
+silly extracting entry Readme.md
+silly extracting entry views/sharedTemplates.mustache
+verbose caching /Users/dave/.npm/hogan-template-compiler/1.0.3/package/package.json
+verbose loadDefaults hogan-template-compiler@1.0.3
+silly updated sha bytes 2055
+info shasum e6f07ec0038c4f69ecedf358817a6ff826a72930
+info shasum /Users/dave/.npm/hogan-template-compiler/1.0.3/package.tgz
+verbose from cache /Users/dave/.npm/hogan-template-compiler/1.0.3/package/package.json
+verbose chmod /Users/dave/.npm/hogan-template-compiler/1.0.3/package.tgz 644
+verbose chown [ '/Users/dave/.npm/hogan-template-compiler/1.0.3/package.tgz',
+verbose chown   501,
+verbose chown   20 ]
+silly publish { name: 'hogan-template-compiler',
+silly publish   author: 
+silly publish    { name: 'Dave Elkan',
+silly publish      email: 'dave@edave.net',
+silly publish      url: 'http://www.edave.net' },
+silly publish   description: 'A module which pre-compiles shared templates and partials for use in a connect-based webapp',
+silly publish   version: '1.0.3',
+silly publish   repository: 
+silly publish    { type: 'git',
+silly publish      url: 'git://github.com/dave-elkan/hogan-template-compiler.git' },
+silly publish   main: 'index',
+silly publish   engines: { node: '>=0.6.0' },
+silly publish   keywords: 
+silly publish    [ 'hogan.js',
+silly publish      'connect',
+silly publish      'express',
+silly publish      'hogan',
+silly publish      'partials',
+silly publish      'template' ],
+silly publish   dependencies: { 'hogan.js': '2.0.0', underscore: '1.3.1' },
+silly publish   _npmUser: { name: 'edave', email: 'dave@edave.net' },
+silly publish   _id: 'hogan-template-compiler@1.0.3',
+silly publish   devDependencies: {},
+silly publish   optionalDependencies: {},
+silly publish   _engineSupported: true,
+silly publish   _npmVersion: '1.1.21',
+silly publish   _nodeVersion: 'v0.6.17',
+silly publish   _defaultsLoaded: true,
+silly publish   dist: 
+silly publish    { shasum: 'e6f07ec0038c4f69ecedf358817a6ff826a72930',
+silly publish      tarball: 'http://registry.npmjs.org/hogan-template-compiler/-/hogan-template-compiler-1.0.3.tgz' } }
+verbose raw, before any munging hogan-template-compiler
+verbose url resolving [ 'https://registry.npmjs.org/', './hogan-template-compiler' ]
+verbose url resolved https://registry.npmjs.org/hogan-template-compiler
+http PUT https://registry.npmjs.org/hogan-template-compiler
+http 409 https://registry.npmjs.org/hogan-template-compiler
+verbose raw, before any munging hogan-template-compiler
+verbose url resolving [ 'https://registry.npmjs.org/', './hogan-template-compiler' ]
+verbose url resolved https://registry.npmjs.org/hogan-template-compiler
+http GET https://registry.npmjs.org/hogan-template-compiler
+http 200 https://registry.npmjs.org/hogan-template-compiler
+info Already published hogan-template-compiler@1.0.3
+verbose uploading bin dists []
+ERR! publish fail Cannot publish over existing version.
+ERR! publish fail Bump the 'version' field, set the --force flag, or
+ERR! publish fail     npm unpublish 'hogan-template-compiler@1.0.3'
+ERR! publish fail and try again
+ERR! 
+ERR! System Darwin 11.3.0
+ERR! command "node" "/Users/dave/local/bin/npm" "publish"
+ERR! cwd /Users/dave/Code/node/hogan-template-compiler
+ERR! node -v v0.6.17
+ERR! npm -v 1.1.21
+ERR! code EPUBLISHCONFLICT
+ERR! message publish fail
+ERR! errno {}
+verbose exit [ 1, true ]
