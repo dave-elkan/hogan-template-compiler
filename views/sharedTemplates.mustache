@@ -13,7 +13,7 @@ var templates = (function($) {
     for (var id in partials) {
         templates[id] = (function(id) {
             return function(context) {
-                return $(partials[id].render(context, partials));
+                return partials[id].render(context, partials);
             }
         })(id);
     }
