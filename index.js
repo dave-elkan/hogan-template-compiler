@@ -2,7 +2,8 @@ var fs = require('fs'),
     _ = require("underscore"),
     hogan = require('hogan.js'),
     defaults = {
-        partialsDirectory: __dirname + "/views",
+        layoutsDirectory: __dirname + "/views/layouts",
+        partialsDirectory: __dirname + "/views/partials",
         sharedTemplatesTemplate: __dirname + "/views/sharedTemplates.mustache"
     };
 
@@ -90,7 +91,7 @@ module.exports = function(options) {
      * @param templates {Array} The templates to add to the partials map.
      * @return {Object} A map of partials.
      */
-    function compilePartials(templates) {
+    function compileTemplates(templates) {
         var partials = {};
         templates.forEach(function(template) {
             partials[template.id] = hogan.compile(template.contents);
@@ -110,7 +111,8 @@ module.exports = function(options) {
 
     var sharedTemplateTemplate,
         stringifiedTemplates,
-        partials;
+        partials,
+        layouts;
 
     /**
      * Initialise the template renderer.
@@ -123,9 +125,26 @@ module.exports = function(options) {
     function read() {
         sharedTemplateTemplate = compileTemplateFile(options.sharedTemplatesTemplate);
 
-        var templates = readTemplates(options.partialsDirectory);
-        partials = compilePartials(templates);
-        stringifiedTemplates = renderStringifiedTemplates(templates);
+        var partialTemplates = readTemplates(options.partialsDirectory);
+        partials = compileTemplates(partialTemplates);
+
+        var layoutTemplates = readTemplates(options.layoutsDirectory);
+        layouts = compileTemplates(layoutTemplates);
+        stringifiedTemplates = renderStringifiedTemplates(partialTemplates);
+    }
+
+    function getPartial(name) {
+        var fileName = getShortFileName(name),
+            template = partials[fileName];
+
+        return template;
+    }
+
+    function renderLayout(name, locals) {
+        var layout = layouts[name];
+        if (layout) {
+            return layout.render(locals || {}, partials);
+        }
     }
 
     read();
@@ -139,11 +158,8 @@ module.exports = function(options) {
         getSharedTemplates: function() {
             return stringifiedTemplates;
         },
-        getTemplate: function(file) {
-            var fileName = getShortFileName(file),
-                template = partials[fileName];
-
-            return template;
-        }
+        getTemplate: getPartial,
+        getPartial: getPartial,
+        renderLayout: renderLayout
     };
 };

@@ -1,15 +1,37 @@
 {
-    "name": "hogan-template-compiler",
-    "author": "Dave Elkan <dave@edave.net> (http://www.edave.net)",
-    "description": "A module which pre-compiles shared templates and partials for use in a connect-based webapp",
-    "version": "1.0.3",
-    "repository": "git://github.com/dave-elkan/hogan-template-compiler",
-    "main": "index",
-    "engines": {
+  "name": "hogan-template-compiler",
+  "author": {
+    "name": "Dave Elkan",
+    "email": "dave@edave.net",
+    "url": "http://www.edave.net"
+  },
+  "description": "A module which pre-compiles shared templates and partials for use in a connect-based webapp",
+  "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dave-elkan/hogan-template-compiler.git"
+  },
+  "main": "index",
+  "engines": {
     "node": ">=0.6.0"
-    },
-    "dependencies": {
-      "hogan.js": "2.0.0",
-      "underscore": "1.3.1"
-    }
+  },
+  "dependencies": {
+    "hogan.js": "2.0.0",
+    "underscore": "1.3.1"
+  },
+  "_npmUser": {
+    "name": "edave",
+    "email": "dave@edave.net"
+  },
+  "_id": "hogan-template-compiler@1.0.3",
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "_engineSupported": true,
+  "_npmVersion": "1.1.21",
+  "_nodeVersion": "v0.6.17",
+  "_defaultsLoaded": true,
+  "dist": {
+    "shasum": "0bc5340c6466da3bf3a7096ab3113da34768d6ee"
+  },
+  "_from": "hogan-template-compiler@1.0.3"
 }
